@@ -1,0 +1,9 @@
+name: "Sub workflow 1"
+
+on:
+  workflow_call:
+
+jobs:
+  sub1:
+    steps:
+      - run: echo "sub workflow1 starts"
