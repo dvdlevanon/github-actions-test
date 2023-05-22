@@ -11,7 +11,7 @@ on:
 
 jobs:
   main:
-    runs-on: ubuntu:latest
+    runs-on: ubuntu-latest
     steps:
       - run: echo "main workflow starts"
       - uses: ./.github/workflows/sub1.yml
