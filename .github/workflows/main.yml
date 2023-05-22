@@ -14,3 +14,5 @@ jobs:
   main:
     name: main
     uses: ./.github/workflows/sub1.yml
+    with:
+      param1: david
