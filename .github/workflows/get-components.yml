@@ -3,7 +3,7 @@ name: "Get components"
 on:
   workflow_call:
     outputs:
-      services:
+      components:
         value: ${{ jobs.detect_changes.outputs.components }}
 
 jobs:
