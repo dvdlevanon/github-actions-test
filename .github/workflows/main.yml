@@ -1,0 +1,14 @@
+name: "Main workflow"
+
+on:
+  push:
+    paths:
+      - 'src/*'
+    branches:
+      - 'feat/some-branch'
+
+jobs:
+  main:
+    steps:
+      - run: echo "main workflow starts"
+
