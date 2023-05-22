@@ -2,10 +2,11 @@ name: "Main workflow"
 
 on:
   push:
-    # paths:
-    #   - 'src/*'
+    paths:
+      - 'src/*'
     branches:
       - 'feat/some-branch'
+  workflow_dispatch:
 
 jobs:
   main:
