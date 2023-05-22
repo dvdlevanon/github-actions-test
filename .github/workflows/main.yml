@@ -10,8 +10,8 @@ on:
   workflow_dispatch:
 
 jobs:
+  
   main:
-    runs-on: ubuntu-latest
     steps:
-      - run: echo "main workflow starts"
-      - uses: ./.github/workflows/sub1.yml
+      name: main
+      uses: ./.github/workflows/sub1.yml
