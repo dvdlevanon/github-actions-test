@@ -2,13 +2,16 @@ name: "Get components"
 
 on:
   workflow_call:
+    outputs:
+      services:
+        value: ${{ jobs.detect_changes.outputs.components }}
 
 jobs:
   detect_changes:
     name: Detect changes
     runs-on: ubuntu-latest
     outputs:
-      services: ${{ steps.filter.outputs.changes }}
+      components: ${{ steps.filter.outputs.changes }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3

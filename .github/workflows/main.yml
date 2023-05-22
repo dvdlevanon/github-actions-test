@@ -21,6 +21,6 @@ jobs:
     needs: [ get_components ]
     strategy:
       matrix:
-        component: ${{ fromJSON(needs.get_components.outputs.services) }}
+        component: ${{ fromJSON(needs.get_components.outputs.components) }}
     with:
       param1: ${{ matrix.component }}
