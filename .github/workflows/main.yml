@@ -4,13 +4,13 @@ on:
   push:
     paths:
       - 'src/*'
+      - '.github/*'
     branches:
       - 'feat/some-branch'
   workflow_dispatch:
 
 jobs:
   main:
-    runs-on: ubuntu-latest
     steps:
       - run: echo "main workflow starts"
       - uses: ./.github/workflows/sub1.yml
