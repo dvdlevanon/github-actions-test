@@ -11,4 +11,4 @@ jobs:
   sub1:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "sub workflow1 start with - ${{ inputs.tag-prefix }}"
+      - run: echo "sub workflow1 start with - ${{ inputs.default }}"
