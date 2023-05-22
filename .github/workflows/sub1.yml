@@ -6,4 +6,4 @@ on:
 jobs:
   sub1:
     steps:
-      - run: echo "sub workflow1 starts"
+      - run: echo "sub workflow1 start"
