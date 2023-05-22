@@ -2,8 +2,8 @@ name: "Main workflow"
 
 on:
   push:
-    paths:
-      - 'src/*'
+    # paths:
+    #   - 'src/*'
     branches:
       - 'feat/some-branch'
 
