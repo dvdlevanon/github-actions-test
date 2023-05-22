@@ -16,7 +16,7 @@ jobs:
         uses: dorny/paths-filter@v2
         id: filter
         with:
-          filters:
-            - src/component1: 'src/component3/**'
-            - src/component2: 'src/component3/**'
-            - src/component3: 'src/component3/**'
+          filters: |
+            src/component1: 'src/component3/**'
+            src/component2: 'src/component3/**'
+            src/component3: 'src/component3/**'
