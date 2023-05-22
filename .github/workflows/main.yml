@@ -3,8 +3,8 @@ name: "Main workflow"
 on:
   push:
     paths:
-      - 'src/*'
-      - '.github/*'
+      - 'src/**'
+      - '.github/**'
     branches:
       - 'feat/some-branch'
   workflow_dispatch:
