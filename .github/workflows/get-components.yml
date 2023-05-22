@@ -17,6 +17,6 @@ jobs:
         id: filter
         with:
           filters: |
-            src/component1: 'src/component3/**'
-            src/component2: 'src/component3/**'
+            src/component1: 'src/component1/**'
+            src/component2: 'src/component2/**'
             src/component3: 'src/component3/**'
