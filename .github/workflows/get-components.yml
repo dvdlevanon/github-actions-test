@@ -1,0 +1,22 @@
+name: "Get components"
+
+on:
+  workflow_call:
+
+jobs:
+  detect_changes:
+    name: Detect changes
+    runs-on: ubuntu-latest
+    outputs:
+      services: ${{ steps.filter.outputs.changes }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Detect Changes
+        uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters:
+            src/component1: 'src/component3/**'
+            src/component2: 'src/component3/**'
+            src/component3: 'src/component3/**'

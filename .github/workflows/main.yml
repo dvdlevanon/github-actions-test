@@ -11,8 +11,16 @@ on:
 
 jobs:
   
+  get_components:
+    name: get components
+    uses: ./github/workflows/get-components.yml
+  
   main:
     name: main
     uses: ./.github/workflows/sub1.yml
+    needs: [ get_components ]
+    strategy:
+      matrix:
+        component: ${{ fromJSON(needs.get_components.outputs.services) }}
     with:
-      param1: david
+      param1: ${{ matrix.component }}
