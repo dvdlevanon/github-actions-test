@@ -12,6 +12,5 @@ on:
 jobs:
   
   main:
-    steps:
-      name: main
-      uses: ./.github/workflows/sub1.yml
+    name: main
+    uses: ./.github/workflows/sub1.yml
