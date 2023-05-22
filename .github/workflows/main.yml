@@ -17,10 +17,18 @@ jobs:
   
   main:
     name: main
-    uses: ./.github/workflows/sub1.yml
+    runs-on: ubuntu-latest
     needs: [ get_components ]
-    strategy:
-      matrix:
-        component: ${{ fromJSON(needs.get_components.outputs.components) }}
-    with:
-      param1: ${{ matrix.component }}
+    steps:
+      - run: echo ${{ needs.get_components.outputs }}
+      - run: echo ${{ needs.get_components.outputs.components }}
+      
+  # main:
+  #   name: main
+  #   uses: ./.github/workflows/sub1.yml
+  #   needs: [ get_components ]
+  #   strategy:
+  #     matrix:
+  #       component: ${{ fromJSON(needs.get_components.outputs.components) }}
+  #   with:
+  #     param1: ${{ matrix.component }}
