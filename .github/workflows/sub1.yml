@@ -1,0 +1,14 @@
+name: "Sub workflow 1"
+
+on:
+  workflow_call:
+    inputs:
+      param1:
+        type: string
+        default: empty
+
+jobs:
+  sub1:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "sub workflow1 start with - ${{ inputs.param1 }}"
