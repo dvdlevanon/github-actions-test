@@ -20,6 +20,7 @@ jobs:
         uses: ./.github/actions/validate-deploy
 
   deploy1:
+    runs-on: ubuntu-22.04
     name: deploy1
     needs: validate
     steps:
@@ -27,6 +28,7 @@ jobs:
         run: echo "Deploy1"
   
   deploy2:
+    runs-on: ubuntu-22.04
     name: deploy2
     needs: validate
     steps:
@@ -34,6 +36,7 @@ jobs:
         run: echo "Deploy2"
 
   final:
+    runs-on: ubuntu-22.04
     name: final
     needs: [deploy1, deploy2]
     steps:
