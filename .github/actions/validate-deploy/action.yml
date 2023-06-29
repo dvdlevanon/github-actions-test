@@ -1,0 +1,8 @@
+name: "validate-deploy"
+description: "Validate Deploy"
+
+using: "composite"
+  steps:
+    - shell: bash
+      run: |
+        echo "validate"

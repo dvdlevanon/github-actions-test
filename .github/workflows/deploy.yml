@@ -1,0 +1,41 @@
+name: "deploy"
+
+on:
+  workflow_dispatch:
+    inputs:
+      force-deploy:
+        description: 'Force'
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  validate:
+    name: validate
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Validate
+        uses: ./.github/actions/validate-deploy
+
+  deploy1:
+    name: deploy1
+    needs: validate
+    steps:
+      - name: run-deploy1
+        run: echo "Deploy1"
+  
+  deploy2:
+    name: deploy2
+    needs: validate
+    steps:
+      - name: run-deploy2
+        run: echo "Deploy2"
+
+  final:
+    name: final
+    needs: [deploy1, deploy2]
+    steps:
+      - name: final
+        run: echo "Final"
