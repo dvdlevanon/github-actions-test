@@ -1,7 +1,8 @@
 name: "validate-deploy"
 description: "Validate Deploy"
 
-using: "composite"
+runs:
+  using: "composite"
   steps:
     - shell: bash
       run: |
