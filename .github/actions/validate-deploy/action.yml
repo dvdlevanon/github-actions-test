@@ -12,4 +12,4 @@ runs:
   steps:
     - shell: bash
       run: |
-        echo "validate - should skip? ${{inputs.pr-number}}"
+        echo "validate - should skip? ${{inputs.skip-verification}}"
