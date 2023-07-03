@@ -12,4 +12,16 @@ runs:
   steps:
     - shell: bash
       run: |
-        echo "validate - should skip? ${{inputs.skip-verification}}"
+        current_time=$(date -d "now" +%s)
+        day_of_week=$(date +%A)
+        
+        if [ "$day_of_week" == "Sunday" ]; then
+          max_time=$(TZ=UTC date --date='TZ="Israel" 16:00' +%s)
+        else
+          max_time=$(TZ=UTC date --date='TZ="Israel" 13:00' +%s)
+        fi
+        
+        echo "$day_of_week"
+        echo "$current_time"
+        echo "$max_time"
+        exit 0
