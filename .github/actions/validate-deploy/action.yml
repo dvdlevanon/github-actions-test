@@ -12,6 +12,10 @@ runs:
   steps:
     - shell: bash
       run: |
+        if [[ "${{ inputs.deployment-channel }}" == "true" ]]; then
+          exit 0
+        fi
+        
         day_of_week=$(date +%A)
         if [[ "$day_of_week" == "Sunday" ]]; then
           max_epoch=$(TZ=UTC date --date='TZ="Israel" 16:00' +%s)
@@ -22,6 +26,10 @@ runs:
         now_epoch=$(date -d "now" +%s)
         echo "Validating time of deploy ($day_of_week) [now: $now_epoch] [max: $max_epoch]"
         if (( $now_epoch > $max_epoch )); then
+          echo -e "\nDeployment failed. The deployment occurred outside the permissible time window. \
+            \nDeployments can only occur on Sundays from 00:00 to 16:00 and on other days from 00:00 to 13:00. \
+            \nPlease schedule your deployments within these time frames to avoid failure. \
+            \nHowever, if you choose to click \"Force\", the time window checks will be skipped and deployment will proceed."
           exit 1
         else
           exit 0
