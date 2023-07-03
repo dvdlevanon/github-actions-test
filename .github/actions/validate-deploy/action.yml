@@ -12,16 +12,17 @@ runs:
   steps:
     - shell: bash
       run: |
-        current_time=$(date -d "now" +%s)
         day_of_week=$(date +%A)
-        
-        if [ "$day_of_week" == "Sunday" ]; then
-          max_time=$(TZ=UTC date --date='TZ="Israel" 16:00' +%s)
+        if [[ "$day_of_week" == "Sunday" ]]; then
+          max_epoch=$(TZ=UTC date --date='TZ="Israel" 16:00' +%s)
         else
-          max_time=$(TZ=UTC date --date='TZ="Israel" 13:00' +%s)
+          max_epoch=$(TZ=UTC date --date='TZ="Israel" 13:00' +%s)
         fi
         
-        echo "$day_of_week"
-        echo "$current_time"
-        echo "$max_time"
-        exit 0
+        now_epoch=$(date -d "now" +%s)
+        echo "Validating time of deploy ($day_of_week) [now: $now_epoch] [max: $max_epoch]"
+        if (( $now_epoch > $max_epoch )); then
+          exit 1
+        else
+          exit 0
+        fi
