@@ -12,7 +12,7 @@ runs:
   steps:
     - shell: bash
       run: |
-        if [[ "${{ inputs.deployment-channel }}" == "true" ]]; then
+        if [[ "${{ inputs.skip-verification }}" == "true" ]]; then
           exit 0
         fi
         
