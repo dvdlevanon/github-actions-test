@@ -6,7 +6,7 @@ inputs:
     default: false
     type: boolean
     description: "Should skip verification"
-  max-allowed-hour:
+  max_allowed_hour:
     required: false
     default: "13"
     type: number
