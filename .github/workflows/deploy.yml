@@ -8,7 +8,7 @@ on:
         required: false
         type: boolean
         default: false
-      max-allowed-hour:
+      max_allowed_hour:
         required: false
         default: "13"
         type: number
@@ -25,7 +25,7 @@ jobs:
         uses: ./.github/actions/validate-deploy
         with:
           skip-verification: ${{inputs.force-deploy}}
-          max-allowed-hour: ${{inputs.max-allowed-hour}}
+          max_allowed_hour: ${{inputs.max_allowed_hour}}
 
   deploy1:
     runs-on: ubuntu-22.04
