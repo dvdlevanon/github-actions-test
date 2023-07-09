@@ -8,6 +8,11 @@ on:
         required: false
         type: boolean
         default: false
+      max_allowed_hour:
+        required: false
+        default: "13"
+        type: number
+        description: "Define the latest permissible deployment hour (00-24) daily, with an additional 3 hours granted on Sundays."
 
 jobs:
   validate:
@@ -20,6 +25,7 @@ jobs:
         uses: ./.github/actions/validate-deploy
         with:
           skip-verification: ${{inputs.force-deploy}}
+          max_allowed_hour: ${{inputs.max_allowed_hour}}
 
   deploy1:
     runs-on: ubuntu-22.04
