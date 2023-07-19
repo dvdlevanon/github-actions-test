@@ -10,7 +10,7 @@ on:
         default: false
         
 jobs:
-  validate-deploy-time:
+  validate:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
