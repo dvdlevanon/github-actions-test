@@ -14,7 +14,7 @@ runs:
   using: "composite"
   steps:
     - shell: bash
-      if: inputs.skip_verification == false
+      if: inputs.skip_verification == 'false'
       run: |
         max_allowed_hour="${{ inputs.max_allowed_hour }}"
         day_of_week="$(date +%A)"
