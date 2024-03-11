@@ -3,29 +3,22 @@ name: "deploy"
 on:
   workflow_dispatch:
     inputs:
-      force-deploy:
-        description: 'Force'
+      skip-time-gate:
+        description: 'Force deploy - skip time gate'
         required: false
         type: boolean
         default: false
-      max_allowed_hour:
-        required: false
-        default: "13"
-        type: number
-        description: "Define the latest permissible deployment hour (00-24) daily, with an additional 3 hours granted on Sundays."
-
+        
 jobs:
   validate:
-    name: validate
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
-      
       - name: Validate
         uses: ./.github/actions/validate-deploy
         with:
-          skip-verification: ${{inputs.force-deploy}}
-          max_allowed_hour: ${{inputs.max_allowed_hour}}
+          skip_verification: ${{inputs.skip-time-gate}}
+          max_allowed_hour: "13:00"
 
   deploy1:
     runs-on: ubuntu-22.04

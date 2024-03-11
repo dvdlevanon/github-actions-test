@@ -1,33 +1,36 @@
 name: "validate-deploy"
 description: "Validate Deploy"
 inputs:
-  skip-verification:
+  skip_verification:
     default: false
     type: boolean
     description: "Should skip verification"
   max_allowed_hour:
     required: true
-    type: number
-    description: "Define the latest permissible deployment hour (00-24) daily, with an additional 3 hours granted on Sundays."
+    type: string
+    description: "Define the latest permissible deployment hour (00:00-23:59) daily, with an additional 3 hours granted on Sundays."
 
 runs:
   using: "composite"
   steps:
     - shell: bash
-      if: inputs.skip-verification == false
+      if: inputs.skip_verification == 'false'
       run: |
         max_allowed_hour="${{ inputs.max_allowed_hour }}"
         day_of_week="$(date +%A)"
         
         if [[ "$day_of_week" == "Sunday" ]]; then
-          ((max_allowed_hour=max_allowed_hour+3))
+          hours=${max_allowed_hour%%:*}
+          minutes=${max_allowed_hour#*:}
+          ((hours=hours+3))
+          max_allowed_hour="$hours:$minutes"
         fi
 
-        max_epoch="$(TZ=UTC date --date='TZ="Israel" '"${max_allowed_hour}:00" +%s)"
+        max_epoch="$(TZ=UTC date --date='TZ="Israel" '"${max_allowed_hour}" +%s)"
         now_epoch="$(date -d "now" +%s)"
         echo "Validating time of deploy ($day_of_week) [now: $now_epoch] [max: $max_epoch]"
         
-        if (( $now_epoch > $max_epoch )); then
+        if [[ $now_epoch -gt $max_epoch ]]; then
           echo -e "\nDeployment failed. The deployment occurred outside the permissible time window. \
             \nDeployments can only occur on Sundays from 00:00 to 16:00 and on other days from 00:00 to 13:00. \
             \nPlease schedule your deployments within these time frames to avoid failure. \
