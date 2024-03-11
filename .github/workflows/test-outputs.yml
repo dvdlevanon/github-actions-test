@@ -1,0 +1,22 @@
+name: "Test outputs"
+
+on:
+  push:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Define env vars
+        id: define_vars
+        run: |
+          echo "foo=bar" >> $GITHUB_OUTPUT
+          echo "something=else" >> $GITHUB_OUTPUT
+          echo "david=lev" >> $GITHUB_OUTPUT
+      
+      - name: Use vars
+        run: |
+          echo ${{ steps.define_vars.outputs.foo }}
+          echo ${{ steps.define_vars.outputs.something }}
+          echo ${{ steps.define_vars.outputs.david }}
+
