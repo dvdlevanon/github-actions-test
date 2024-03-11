@@ -2,6 +2,16 @@ name: "Test outputs"
 
 on:
   push:
+    inputs:
+      environment:
+        description: 'Environment'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+          - staging
+          - prod
+          - dev
 
 jobs:
   test:
@@ -19,4 +29,5 @@ jobs:
           echo ${{ steps.define_vars.outputs.foo }}
           echo ${{ steps.define_vars.outputs.something }}
           echo ${{ steps.define_vars.outputs.david }}
+          echo ${{ inputs.environment }}
 
