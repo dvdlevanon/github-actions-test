@@ -3,6 +3,9 @@ name: Manual workflow
 on:
   workflow_dispatch:
   workflow_call:
+    secrets:
+      Test:
+        required: true
     
 jobs:
   print:

@@ -7,3 +7,5 @@ on:
 jobs:
   run-drift-detector:
     uses: ./.github/workflows/manual.yml
+    secrets:
+      Test: ${{ secrets.TEST }}
