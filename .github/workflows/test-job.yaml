@@ -1,0 +1,9 @@
+name: test job
+
+on:
+  schedule:
+    - cron: '* * * * *'  # At 06:00 AM every Saturday
+
+jobs:
+  run-drift-detector:
+    uses: ./.github/workflows/manual.yml
