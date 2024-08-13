@@ -1,0 +1,22 @@
+on:
+  workflow_dispatch:
+  push:
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+    
+    steps:
+      - name: Validate Secret Length
+        run: |
+          if [ -z "$TEST" ]; then
+            echo "TEST is not set"
+          else
+            echo "TEST is set and its length is: ${#TEST}"
+          fi
+
+        env:
+          TEST: ${{ secrets.TEST }}
