@@ -1,3 +1,5 @@
+name: Release
+
 on:
   workflow_dispatch:
   push:
@@ -12,11 +14,17 @@ jobs:
     steps:
       - name: Validate Secret Length
         run: |
-          if [ -z "$TEST" ]; then
-            echo "TEST is not set"
+          if [ -z "$DOCKER_USERNAME" ]; then
+            echo "DOCKER_USERNAME is not set"
           else
-            echo "TEST is set and its length is: ${#TEST}"
+            echo "DOCKER_USERNAME is set and its length is: ${#DOCKER_USERNAME}"
           fi
-
+          
+          if [ -z "$DOCKER_PASSWORD" ]; then
+            echo "DOCKER_PASSWORD is not set"
+          else
+            echo "DOCKER_PASSWORD is set and its length is: ${#DOCKER_PASSWORD}"
+          fi
         env:
-          TEST: ${{ secrets.TEST }}
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
