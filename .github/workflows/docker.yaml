@@ -1,0 +1,15 @@
+name: "Docker tests"
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  steps:
+    - uses: actions/checkout@v4
+    
+    - name: Build image
+      run: docker build -t debi-test -f Dockerfile .
+
+    - name: Run the docker
+      run: docker run --rm debi-test
