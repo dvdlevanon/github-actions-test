@@ -8,7 +8,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  generaet:
+  generate:
     runs-on: ubuntu-latest
 
     permissions:
