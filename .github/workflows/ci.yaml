@@ -53,9 +53,9 @@ jobs:
               repo: context.repo.repo,
               sha: finalSha.data.object.sha,
               state: 'success',
-              context: 'ci/final-status',
-              description: 'All CI jobs completed successfully',
+              context: 'ci/success',
+              description: 'CI completed successfully',
               target_url: '${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
             });
             
-            console.log('✅ Status check created for final commit:', finalSha.data.object.sha);
+            console.log('Status check created for final commit:', finalSha.data.object.sha);
