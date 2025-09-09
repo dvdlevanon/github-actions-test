@@ -25,3 +25,10 @@ jobs:
   tests-ci:
     needs: generate-ci
     uses: ./.github/workflows/tests.yaml
+
+  success:
+    needs: [tests-ci]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Success
+        run: exit 0
