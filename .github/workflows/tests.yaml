@@ -15,5 +15,20 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.head_ref }}
 
+      - name: Pull latest changes
+        run: |
+          echo "Before git pull:"
+          git log --oneline -1
+          
+          # Pull latest changes from the PR branch
+          git pull origin ${{ github.head_ref }}
+          
+          echo "After git pull:"
+          git log --oneline -1
+          
+          echo "Current files:"
+          echo "VERSION: $(cat VERSION)"
+          echo "Release.version: $(cat Release.version)"
+
       - name: Success
         run: exit 0
