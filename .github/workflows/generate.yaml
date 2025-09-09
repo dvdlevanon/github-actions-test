@@ -21,6 +21,10 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Pull latest changes
+        run: |
+          git pull origin ${{ github.head_ref }}
+
       - name: Configure Git
         run: |
           git config user.name "$GITHUB_ACTOR"
