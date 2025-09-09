@@ -19,5 +19,5 @@ jobs:
     uses: ./.github/workflows/generate.yaml
 
   tests-ci:
-    needs: tests-ci
+    needs: generate-ci
     uses: ./.github/workflows/tests.yaml
