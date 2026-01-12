@@ -7,6 +7,9 @@ if [ "$1" == "--auto" ]; then
 fi
 
 stop_test_and_exit() {
+	rm -f "$RUN_FILE"
+	echo "Deleted $RUN_FILE"
+
 	echo "Test stopped successfully"
 	exit 0
 }
