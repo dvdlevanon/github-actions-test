@@ -1,0 +1,39 @@
+name: Stop Test
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/5 * * * *'  # Run every 5 minutes
+
+jobs:
+  stop-test-script:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+        
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
+        
+      - name: Run stop-run script (manual trigger)
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          cd apps
+          ./test-stop.sh
+      
+      - name: Run stop-run script (auto trigger)
+        if: github.event_name == 'schedule'
+        run: |
+          cd apps
+          ./test-stop.sh --auto
+      
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v7
+        with:
+          commit_message: "[AUTO GITHUB] Test run stopped - trigger: ${{ github.event_name }}"
+          branch: ${{ github.ref_name }}
+          file_pattern: 'apps'
+          create_branch: false

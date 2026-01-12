@@ -1,0 +1,45 @@
+name: Run Test
+
+on:
+  workflow_dispatch:
+    inputs:
+      duration:
+        description: 'Duration to run'
+        required: true
+        type: choice
+        options:
+          - '1h'
+          - '2h'
+          - '3h'
+          - '4h'
+          - '5h'
+          - '6h'
+          - '7h'
+          - '8h'
+          - '9h'
+          - '10h'
+          - '11h'
+          - '12h'
+
+jobs:
+  run-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      
+      - name: Run test script with duration
+        run: |
+          cd apps
+          ./test-run.sh ${{ github.event.inputs.duration }}
+      
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v7
+        with:
+          commit_message: "[AUTO GITHUB] Test run started - duration: ${{ github.event.inputs.duration }}"
+          branch: ${{ github.ref_name }}
+          file_pattern: 'apps'
+          create_branch: false
