@@ -1,0 +1,72 @@
+name: Helm Chart Release
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'chart/**'
+      - '.github/workflows/chart-release.yaml'
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        environment:
+          - name: dev
+            aws_role: AWS_ROLE_DEV
+            aws_account: "123456"
+            aws_region: us-east-1
+          - name: prod
+            aws_role: AWS_ROLE_PROD
+            aws_account: "654321"
+            aws_region: us-east-1
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v4
+        with:
+          version: 'v3.19.5'
+
+      - name: Get chart version
+        id: chart_version
+        run: |
+          cd chart
+          VERSION=$(grep '^version:' Chart.yaml | awk '{print $2}')
+          echo "Chart version: $VERSION"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Package Helm chart
+        run: |
+          cd chart
+          helm package .
+          echo "Packaged chart: test-${{ steps.chart_version.outputs.version }}.tgz"
+
+      # - name: Configure AWS credentials (${{ matrix.environment.name }})
+      #   uses: aws-actions/configure-aws-credentials@v5
+      #   with:
+      #     role-to-assume: ${{ vars[matrix.environment.aws_role] }}
+      #     aws-region: ${{ matrix.environment.aws_region }}
+
+      # - name: Login to Amazon ECR (${{ matrix.environment.name }})
+      #   uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Push chart to ${{ matrix.environment.name }} ECR
+        run: |
+          cd chart
+          ECR_URL="${{ matrix.environment.aws_account }}.dkr.ecr.${{ matrix.environment.aws_region }}.amazonaws.com/helm-charts"
+          # helm push test-${{ steps.chart_version.outputs.version }}.tgz oci://${ECR_URL}
+          echo "Published to ${{ matrix.environment.name }}: ${ECR_URL}/test:${{ steps.chart_version.outputs.version }}"
+
+      - name: Output ECR URL
+        run: |
+          ECR_URL="${{ matrix.environment.aws_account }}.dkr.ecr.${{ matrix.environment.aws_region }}.amazonaws.com/helm-charts/test:${{ steps.chart_version.outputs.version }}"
+          echo "**${{ matrix.environment.name }}:** \`$ECR_URL\`" >> $GITHUB_STEP_SUMMARY
